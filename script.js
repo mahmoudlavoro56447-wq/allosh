@@ -64,9 +64,14 @@ function startBarcodeScanner() {
         // Optimized rectangular configuration for retail codes
         // 🎯 OPTIMIZATION: Added videoConstraints configuration directly into the object mapping.
         // Loaded QR_CODE into format array strictly to recognize it and catch it in the callback filter.
+        
+        /////
+            console.log("optimize")
+        //    line important need some optimization
+        /////
         const config = { 
             fps: 20, 
-            qrbox: { width: 300, height: 140 },
+            qrbox: { width: 1280, height: 720 },
             formatsToSupport: [ 
                 Html5QrcodeSupportedFormats.EAN_13, 
                 Html5QrcodeSupportedFormats.UPC_A,
@@ -79,7 +84,9 @@ function startBarcodeScanner() {
                 height: { ideal: 720 }
             }
         };
-
+        //////
+        console.log("end optimize")
+        ///////
         // Fire the live streaming video feed
         html5QrcodeInstance.start(
             { facingMode: "environment" }, // Keeps your stable single-key parameter object safe
@@ -209,7 +216,7 @@ addItem.onclick = () => {
         if (tr) {
             let tdQuantity = tr.querySelector(".quantity")
             tdQuantity.innerHTML = parseFloat(tdQuantity.innerHTML) + 1
-            totals.innerHTML=parseFloat(totals.innerHTML)+parseFloat(targetProduct.Price) 
+            totals.innerHTML=parseFloat(totals.innerHTML)+(parseFloat(targetProduct.Price)*parseFloat(tdQuantity.innerHTML)) 
         }
     } else {
         let tr = document.createElement("tr");
@@ -233,7 +240,7 @@ addItem.onclick = () => {
                 tdQuantityValue.innerHTML=inpModifyQuan.value
                 console.log(tdQuantityValue.innerHTML)
                 console.log(inpModifyQuan.value)
-                totals.innerHTML=parseFloat(totals.innerHTML)-(parseFloat(tdPrice.innerHTML)*parseInt(previousValue))+parseFloat(tdPrice.innerHTML)
+                totals.innerHTML=parseFloat(totals.innerHTML)-(parseFloat(tdPrice.innerHTML)*parseInt(previousValue))+(parseFloat(tdPrice.innerHTML)*parseFloat(tdQuantity.innerHTML))
                 totals.innerHTML=parseFloat( totals.innerHTML).toFixed(2)                
             }
 
